@@ -2,6 +2,7 @@ export const CONTACT_DETAILS = {
   address: "153/1/1 palliyawatte, hendala, wattala.",
   email: "support@traveltribe.lk",
   phone: "+94765672017",
+  whatsapplink: "https://wa.me/94765672017",
 };
 
 export const REVIEWS = [

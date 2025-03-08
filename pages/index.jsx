@@ -383,7 +383,7 @@ const Index2 = () => {
               <div
                 className="hover-bg bg_cover"
                 style={{
-                  backgroundImage: "url(assets/images/service/hover-bg.jpg)",
+                  backgroundImage: "url(assets/images/new/bg5.jpg)",
                 }}
               />
               <div className="content">
@@ -408,7 +408,7 @@ const Index2 = () => {
               <div
                 className="hover-bg bg_cover"
                 style={{
-                  backgroundImage: "url(assets/images/service/hover-bg.jpg)",
+                  backgroundImage: "url(assets/images/new/bg5.jpg)",
                 }}
               />
               <div className="content">
@@ -432,7 +432,7 @@ const Index2 = () => {
               <div
                 className="hover-bg bg_cover"
                 style={{
-                  backgroundImage: "url(assets/images/service/hover-bg.jpg)",
+                  backgroundImage: "url(assets/images/new/bg5.jpg)",
                 }}
               />
               <div className="content">
@@ -457,7 +457,7 @@ const Index2 = () => {
               <div
                 className="hover-bg bg_cover"
                 style={{
-                  backgroundImage: "url(assets/images/service/hover-bg.jpg)",
+                  backgroundImage: "url(assets/images/new/bg5.jpg)",
                 }}
               />
               <div className="content">
@@ -482,7 +482,7 @@ const Index2 = () => {
               <div
                 className="hover-bg bg_cover"
                 style={{
-                  backgroundImage: "url(assets/images/service/hover-bg.jpg)",
+                  backgroundImage: "url(assets/images/new/bg5.jpg)",
                 }}
               />
               <div className="content">

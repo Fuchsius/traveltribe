@@ -7,12 +7,13 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Nav, Tab } from "react-bootstrap";
+import toast from "react-hot-toast";
 import Slider from "react-slick";
 
 const TourDetails = () => {
   const router = useRouter();
   const { id } = router.query;
-
+  const [isLoading, setIsLoading] = useState(false);
   const [tour, setTour] = useState(null);
 
   useEffect(() => {
@@ -27,7 +28,7 @@ const TourDetails = () => {
     return <div>Loading...</div>; // Show a loading state while fetching data
   }
 
-  const handleBookingForm = (e) => {
+  const handleBookingForm = async (e) => {
     e.preventDefault();
 
     // Get form values
@@ -35,11 +36,53 @@ const TourDetails = () => {
     let formValues = Object.fromEntries(formData.entries());
     formValues = {
       ...formValues,
-      tourTitle: tour.title,
+      title: tour.title, // Assuming `tour.title` is available in the scope
     };
 
-    // Process the form values
+    // Log form values for debugging
     console.log("Form Values:", formValues);
+
+    try {
+      setIsLoading(true);
+      // Make the API call
+      const databody = {
+        title: formValues.title,
+        date: formValues.date,
+        adult: formValues.adultTickets,
+        youth: formValues.youthTickets,
+        child: formValues.childTickets,
+        number: formValues.contactNumber,
+        email: formValues.email,
+      };
+      const response = await fetch("https://api.traveltribe.lk/booking/send", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(databody),
+      });
+
+      console.log(response)
+
+      if (!response.ok) {
+        throw new Error(`Failed to send booking: ${response.statusText}`);
+      }
+
+      // Process successful response
+      const result = await response.json();
+      console.log("Booking successful:", result);
+
+      // Show a success message or redirect the user
+      toast.success("Booking submitted successfully!");
+    } catch (error) {
+      // Handle errors
+      console.error("Error submitting booking:", error);
+      toast.error(
+        "There was an error submitting your booking. Please try again."
+      );
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -405,8 +448,11 @@ const TourDetails = () => {
                         </div>
                       </div>
                       <div className="submit-button">
-                        <button className="main-btn primary-btn">
-                          Booking Now
+                        <button
+                          disabled={isLoading}
+                          className="main-btn primary-btn"
+                        >
+                          {isLoading ? "Loading..." : "Book Now"}
                           <i className="far fa-paper-plane" />
                         </button>
                       </div>

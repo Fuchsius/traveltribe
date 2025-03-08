@@ -2,16 +2,56 @@ import GallerySection from "@/src/components/GallerySection";
 import PageBanner from "@/src/components/PageBanner";
 import { CONTACT_DETAILS } from "@/src/constants/data";
 import Layout from "@/src/layout/Layout";
+import { useState } from "react";
 import toast from "react-hot-toast";
 const Contact = () => {
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+
+    // Get form data
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData.entries());
-    console.log(data);
-    toast.success("Message Sent Successfully");
+
+    console.log("Form Data:", data); // For debugging
+
+    try {
+      setIsLoading(true);
+      // Make the POST request
+      const response = await fetch("https://api.traveltribe.lk/contact/send", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: data.name,
+          subject: data.subject,
+          number: data.number,
+          email: data.email,
+          message: data.message,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to send message: ${response.statusText}`);
+      }
+
+      // Process the successful response
+      const result = await response.json();
+      console.log("API Response:", result);
+
+      // Show success notification
+      toast.success("Message Sent Successfully");
+    } catch (error) {
+      // Handle errors
+      console.error("Error sending message:", error);
+      toast.error("Failed to send the message. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
+
   return (
     <Layout extraClass={"pt-160"}>
       <PageBanner pageTitle={"Contact Us"} />
@@ -51,9 +91,7 @@ const Contact = () => {
                 <div className="info">
                   <span className="title">Email Address</span>
                   <p>
-                    <a href={CONTACT_DETAILS.email}>
-                      {CONTACT_DETAILS.email}
-                    </a>
+                    <a href={CONTACT_DETAILS.email}>{CONTACT_DETAILS.email}</a>
                   </p>
                   {/* <p>
                     <a href="mailto:traveladventure.net">traveladventure.net</a>
@@ -70,7 +108,9 @@ const Contact = () => {
                 <div className="info">
                   <span className="title">Hotline</span>
                   <p>
-                    <a href={`tel:${CONTACT_DETAILS.phone}`}>{CONTACT_DETAILS.phone}</a>
+                    <a href={`tel:${CONTACT_DETAILS.phone}`}>
+                      {CONTACT_DETAILS.phone}
+                    </a>
                   </p>
                   {/* <p>
                     <a href="tel:+8596320">+859 63 20</a>
@@ -163,8 +203,8 @@ const Contact = () => {
                     </div>
                     <div className="col-lg-12">
                       <div className="form_group text-center">
-                        <button className="main-btn primary-btn">
-                          Send Us Message
+                        <button disabled={isLoading} className="main-btn primary-btn">
+                          {isLoading ? "Sending..." : "Send Us Message"}
                           <i className="fas fa-paper-plane" />
                         </button>
                       </div>

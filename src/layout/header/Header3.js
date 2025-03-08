@@ -120,10 +120,10 @@ const Header3 = () => {
               <Menu />
               {/*====== Menu Button ======*/}
               <div className="menu-button mt-40 d-xl-none">
-                <Link legacyBehavior href="/contact">
+                <Link legacyBehavior target="_blank" href={CONTACT_DETAILS.whatsapplink}>
                   <a className="main-btn secondary-btn">
-                    Book Now
-                    <i className="fas fa-paper-plane" />
+                    Whatsapp
+                    <i className="fab fa-whatsapp" />
                   </a>
                 </Link>
               </div>
@@ -131,10 +131,10 @@ const Header3 = () => {
             {/*====== Nav Right Item ======*/}
             <div className="nav-right-item">
               <div className="menu-button d-xl-block d-none">
-                <Link legacyBehavior href="/contact">
+                <Link legacyBehavior target="_blank" href={CONTACT_DETAILS.whatsapplink}>
                   <a className="main-btn primary-btn">
-                    Book Now
-                    <i className="fas fa-paper-plane" />
+                    Whatsapp
+                    <i className="fab fa-whatsapp" />
                   </a>
                 </Link>
               </div>
